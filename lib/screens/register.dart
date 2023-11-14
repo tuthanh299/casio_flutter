@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:casio_flutter/screens/hold.dart';
-import 'package:casio_flutter/screens/register.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+import 'Login.dart';
+
+class Register extends StatefulWidget {
+  const Register({Key? key}) : super(key: key);
 
   @override
-  State<Login> createState() => _LoginState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _LoginState extends State<Login> {
+class _RegisterState extends State<Register> {
   bool cpass = true;
+  bool crepass = true;
   TextEditingController txtMail = TextEditingController();
   TextEditingController txtPass = TextEditingController();
+  TextEditingController txtrePass = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -24,18 +26,18 @@ class _LoginState extends State<Login> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             //logo
-            const Center(
+            Center(
                 child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image(
+                const Image(
                   image: AssetImage('assets/imgs/logo.png'),
                   width: 100,
                   height: 100,
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
+                  children: const [
                     Text(
                       'G-SHOCK',
                       style: TextStyle(
@@ -56,9 +58,9 @@ class _LoginState extends State<Login> {
             )),
             //end logo
             SizedBox(height: MediaQuery.of(context).size.height / 25),
-            //chữ đăng nhập
+            //chữ đăng kí
             const Text(
-              'ĐĂNG NHẬP',
+              'ĐĂNG KÝ',
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 30,
@@ -72,6 +74,7 @@ class _LoginState extends State<Login> {
                   ]),
             ),
             //end chữ đăng nhập
+            //Ô nhập mail
             //Ô nhập mail
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -95,7 +98,6 @@ class _LoginState extends State<Login> {
                     controller: txtMail,
                     obscureText: false,
                     decoration: const InputDecoration(
-                        contentPadding: EdgeInsets.only(left: 10),
                         border: InputBorder.none,
                         hintText: 'Nhập tài khoản',
                         hintStyle:
@@ -106,7 +108,7 @@ class _LoginState extends State<Login> {
             ),
             //end ô nhập mail
             const SizedBox(
-              height: 25,
+              height: 20,
             ),
             //ô nhập pass
             Column(
@@ -123,15 +125,14 @@ class _LoginState extends State<Login> {
                 ),
                 Container(
                   decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      color: Colors.black26),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    color: Colors.black26,
+                  ),
                   width: MediaQuery.of(context).size.width / 1.2,
                   child: TextField(
                     controller: txtPass,
                     obscureText: false,
                     decoration: InputDecoration(
-                        contentPadding:
-                            const EdgeInsets.only(left: 10, top: 15),
                         border: InputBorder.none,
                         suffixIcon: GestureDetector(
                           onTap: () {
@@ -152,37 +153,81 @@ class _LoginState extends State<Login> {
               ],
             ),
             //end ô nhập pass
-            SizedBox(height: MediaQuery.of(context).size.height / 10),
-            //nút đăng nhập
+            const SizedBox(
+              height: 20,
+            ),
+            //ô nhập repass
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Xác nhận mật khẩu:',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    color: Colors.black26,
+                  ),
+                  child: TextField(
+                    controller: txtPass,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              crepass = !crepass;
+                            });
+                          },
+                          child: Icon(
+                            crepass ? Icons.visibility : Icons.visibility_off,
+                            color: Colors.black,
+                          ),
+                        ),
+                        hintText: 'Nhập lại mật khẩu',
+                        hintStyle:
+                            const TextStyle(color: Colors.black, fontSize: 12)),
+                  ),
+                )
+              ],
+            ),
+            //end ô nhập repass
+            SizedBox(height: MediaQuery.of(context).size.height / 8),
+            //nút đăng kí
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => const Hold()),
+                    MaterialPageRoute(builder: (context) => const Login()),
                     (route) => route.isFirst);
               },
               style: ElevatedButton.styleFrom(
                   minimumSize: const Size(200, 50),
                   backgroundColor: Colors.lightGreenAccent),
               child: const Text(
-                'ĐĂNG NHẬP',
+                'ĐĂNG KÝ',
                 style: TextStyle(color: Colors.black),
               ),
             ),
-            //end nút đăng nhập
+            //end nút đăng kí
             //nút chuyển trang
-            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Bạn chưa có tài khoản?,'),
+                const Text('Bạn đã có tài khoản?, '),
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                            builder: (context) => const Register()),
+                        MaterialPageRoute(builder: (context) => const Login()),
                         (route) => route.isFirst);
                   },
-                  child: const Text('Đăng ký ngay!',
+                  child: const Text('Đăng nhập ngay!',
                       style: TextStyle(color: Colors.blue)),
                 )
               ],
