@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'info.dart';
+
 import 'home.dart';
 
 class Hold extends StatefulWidget {
@@ -15,10 +15,10 @@ class _HoldState extends State<Hold> {
   int onPage = 0;
   List<Widget> list = const [
     Home(),
-    Placeholder(),
-    Placeholder(),
+    Placeholder(), //search
+    Placeholder(), //appinfo
     Placeholder(), //cart
-    Info(),
+    Placeholder(),//info
   ];
 
   @override
