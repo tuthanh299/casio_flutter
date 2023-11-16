@@ -1,4 +1,5 @@
 
+import 'package:casio_flutter/screens/info.dart';
 import 'package:flutter/material.dart';
 
 
@@ -18,7 +19,7 @@ class _HoldState extends State<Hold> {
     Placeholder(), //search
     Placeholder(), //appinfo
     Placeholder(), //cart
-    Placeholder(),//info
+    Info(),//info
   ];
 
   @override
