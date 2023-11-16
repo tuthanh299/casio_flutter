@@ -86,7 +86,7 @@ class _InfoState extends State<Info> {
                               fontWeight: FontWeight.bold, fontSize: cochu),
                         ),
                         Text(
-                          'Phạm Đức Tuấn',
+                          'Lê Thanh Tú',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: cochu),
                         ),
