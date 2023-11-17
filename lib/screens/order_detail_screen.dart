@@ -119,7 +119,7 @@ class _OrderDetailState extends State<OrderDetail> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Image.asset('assets/images/dhdemo.png'),
+                      Image.asset('assets/imgs/ga-2140re-1a.jpg'),
                       const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

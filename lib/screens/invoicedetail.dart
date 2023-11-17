@@ -161,7 +161,7 @@ class _InvoiceDetailState extends State<InvoiceDetail> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: const [
                         Text('Tổng'),
-                        Text('1.852.000₫', style: TextStyle(color: Colors.red),),
+                        Text('1.100.000₫', style: TextStyle(color: Colors.red),),
                       ],
                     ),
                   )

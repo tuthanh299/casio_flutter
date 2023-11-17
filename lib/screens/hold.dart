@@ -1,5 +1,8 @@
 
+import 'package:casio_flutter/screens/appinfo.dart';
 import 'package:casio_flutter/screens/info.dart';
+import 'package:casio_flutter/screens/order_screen.dart';
+import 'package:casio_flutter/screens/search.dart';
 import 'package:flutter/material.dart';
 
 
@@ -16,9 +19,9 @@ class _HoldState extends State<Hold> {
   int onPage = 0;
   List<Widget> list = const [
     Home(),
-    Placeholder(), //search
-    Placeholder(), //appinfo
-    Placeholder(), //cart
+    Search(), 
+    AppInfo(), 
+    Order(), //cart
     Info(),//info
   ];
 

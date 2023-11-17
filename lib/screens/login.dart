@@ -156,9 +156,9 @@ class _LoginState extends State<Login> {
             //nút đăng nhập
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => const Hold()),
-                    (route) => route.isFirst);
+                 Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const Hold()),
+                  );
               },
               style: ElevatedButton.styleFrom(
                   minimumSize: const Size(200, 50),
