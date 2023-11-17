@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../screens/product_detail_screen.dart';
+
 class Product extends StatelessWidget {
   Product({
     Key? key,
@@ -20,6 +22,11 @@ class Product extends StatelessWidget {
     return
       //components
       InkWell(
+        onTap: () {
+          Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const ProductDetail()),
+                  );
+        },
         child: Container(
             padding: const EdgeInsets.all(10.0),
             margin: const EdgeInsets.fromLTRB(5, 10, 5, 10),

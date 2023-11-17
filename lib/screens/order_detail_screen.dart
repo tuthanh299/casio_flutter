@@ -119,7 +119,56 @@ class _OrderDetailState extends State<OrderDetail> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Image.asset('assets/images/dhdemo.png'),
+                      Image.asset('assets/imgs/ga-2140re-1a.jpg'),
+                      const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: 290,
+                            child: Padding(
+                              padding: EdgeInsets.all(5.0),
+                              child: Text(
+                                'Đồng Hồ Nữ Chính Hãng CASIO LTP-1094E-1A',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 13),
+                              ),
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.all(5.0),
+                                child: Text(
+                                  '752.000 đ',
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 290, top: 10),
+                            child: Text('x1'),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                )),
+                Container(
+                height: 110,
+                padding: const EdgeInsets.all(5),
+                margin: const EdgeInsets.all(5),
+                child: Container(
+                  width: 390,
+                  decoration:
+                      BoxDecoration(border: Border.all(color: Colors.black)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Image.asset('assets/imgs/ga-2140re-1a.jpg'),
                       const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

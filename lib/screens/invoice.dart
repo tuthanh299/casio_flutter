@@ -95,7 +95,7 @@ class _InvoiceState extends State<Invoice> {
                       Row(
                         children: const [
                           Text('Thành tiền: ', style: TextStyle(fontWeight: FontWeight.bold),),
-                          Text('1.852.000đ', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),),
+                          Text('1.100.000đ', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),),
                         ],
                       ),
                       TextButton(

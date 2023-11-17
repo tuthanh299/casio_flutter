@@ -17,7 +17,9 @@ class _ProductDetailState extends State<ProductDetail> {
           Padding(
               padding: const EdgeInsets.only(top: 50, left: 2),
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
                 icon: const Icon(
                   Icons.arrow_back,
                   size: 50,
@@ -29,7 +31,7 @@ class _ProductDetailState extends State<ProductDetail> {
               Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: Image.asset(
-                  'assets/images/dhdemo.png',
+                  'assets/imgs/ga-2140re-1a.jpg',
                   height: 200,
                   width: 200,
                   fit: BoxFit.cover,
@@ -40,7 +42,7 @@ class _ProductDetailState extends State<ProductDetail> {
                   Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: Image.asset(
-                      'assets/images/dhdemo.png',
+                      'assets/imgs/ga-2140re-1a.jpg',
                       height: 100,
                       width: 100,
                       fit: BoxFit.cover,
@@ -49,7 +51,7 @@ class _ProductDetailState extends State<ProductDetail> {
                   Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: Image.asset(
-                      'assets/images/dhdemo.png',
+                      'assets/imgs/ga-2140re-1a.jpg',
                       height: 100,
                       width: 100,
                       fit: BoxFit.cover,

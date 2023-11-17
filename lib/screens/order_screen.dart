@@ -61,7 +61,7 @@ class _OrderState extends State<Order> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Image.asset('assets/images/dhdemo.png'),
+                            Image.asset('assets/imgs/ga-2140re-1a.jpg'),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
