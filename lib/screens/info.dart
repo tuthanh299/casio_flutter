@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:casio_flutter/screens/changepass.dart';
+import 'package:casio_flutter/screens/editinfo.dart';
+
 class Info extends StatefulWidget {
   const Info({Key? key}) : super(key: key);
 
