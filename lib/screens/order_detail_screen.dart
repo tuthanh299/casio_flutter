@@ -44,7 +44,7 @@ class _OrderDetailState extends State<OrderDetail> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-                height: 170,
+                height: 180,
                 padding: const EdgeInsets.all(5),
                 margin: const EdgeInsets.all(5),
                 child: Container(
@@ -109,7 +109,7 @@ class _OrderDetailState extends State<OrderDetail> {
                   ),
                 )),
             Container(
-                height: 110,
+                height: 130,
                 padding: const EdgeInsets.all(5),
                 margin: const EdgeInsets.all(5),
                 child: Container(
@@ -119,7 +119,10 @@ class _OrderDetailState extends State<OrderDetail> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Image.asset('assets/imgs/ga-2140re-1a.jpg'),
+                      SizedBox(
+                          width: 70,
+                          height: 80,
+                          child: Image.asset('assets/imgs/ga-2140re-1a.jpg')),
                       const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -166,7 +169,7 @@ class _OrderDetailState extends State<OrderDetail> {
             decoration: BoxDecoration(border: Border.all(color: Colors.black)),
             child: Row(children: [
               const Padding(
-                padding: EdgeInsets.only(left: 180.0, top: 10, right: 30),
+                padding: EdgeInsets.only(left: 170.0, top: 5, right: 30),
                 child: Column(
                   children: [
                     Text(
@@ -199,7 +202,7 @@ class _OrderDetailState extends State<OrderDetail> {
                             ),
                             actions: [
                               Container(
-                                padding: const EdgeInsets.only(right: 80),
+                                padding: const EdgeInsets.only(right: 75),
                                 child: ElevatedButton(
                                     style: ButtonStyle(
                                       backgroundColor:
