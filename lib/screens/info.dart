@@ -155,7 +155,7 @@ class _InfoState extends State<Info> {
               InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const Placeholder()) //doi mk
+                          builder: (context) => const ChangePass())
                       );
                 },
                 child: Container(
@@ -175,7 +175,7 @@ class _InfoState extends State<Info> {
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) =>
-                              const Placeholder()) // doi thong tin nguoi dung
+                              const EditInfo())
                       );
                 },
                 child: Container(
@@ -192,7 +192,9 @@ class _InfoState extends State<Info> {
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
                 child: Container(
                   margin: const EdgeInsets.all(10),
                   padding: const EdgeInsets.all(20),
