@@ -202,7 +202,7 @@ class _OrderDetailState extends State<OrderDetail> {
                             ),
                             actions: [
                               Container(
-                                padding: const EdgeInsets.only(right: 75),
+                                padding: const EdgeInsets.only(right: 100),
                                 child: ElevatedButton(
                                     style: ButtonStyle(
                                       backgroundColor:
