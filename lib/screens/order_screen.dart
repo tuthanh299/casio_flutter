@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'order_detail_screen.dart';
@@ -42,7 +41,7 @@ class _OrderState extends State<Order> {
             Row(
               children: [
                 Container(
-                  height: 110,
+                  height: 130,
                   padding: const EdgeInsets.all(5),
                   margin: const EdgeInsets.all(5),
                   child: Row(
@@ -61,7 +60,11 @@ class _OrderState extends State<Order> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Image.asset('assets/imgs/ga-2140re-1a.jpg'),
+                            SizedBox(
+                                width: 70,
+                                height: 80,
+                                child: Image.asset(
+                                    'assets/imgs/ga-2140re-1a.jpg')),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -134,7 +137,7 @@ class _OrderState extends State<Order> {
                                     const Column(
                                       children: [
                                         Padding(
-                                          padding: EdgeInsets.all(1.0),
+                                          padding: EdgeInsets.only(left: 20.0),
                                           child: Text(
                                             'Thành tiền:',
                                             style: TextStyle(
@@ -142,7 +145,7 @@ class _OrderState extends State<Order> {
                                           ),
                                         ),
                                         Padding(
-                                          padding: EdgeInsets.only(left: 5.0),
+                                          padding: EdgeInsets.only(left: 20.0),
                                           child: Text(
                                             '752.000 đ',
                                             style: TextStyle(
@@ -189,7 +192,7 @@ class _OrderState extends State<Order> {
                 ),
               ),
               const Padding(
-                padding: EdgeInsets.only(left: 100.0, top: 10, right: 30),
+                padding: EdgeInsets.only(left: 80.0, top: 5, right: 30),
                 child: Column(
                   children: [
                     Text(

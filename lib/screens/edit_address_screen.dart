@@ -72,7 +72,7 @@ class _EditAddressState extends State<EditAddress> {
                         ),
                         actions: [
                           Container(
-                            padding: const EdgeInsets.only(right: 80),
+                            padding: const EdgeInsets.only(right: 60),
                             child: ElevatedButton(
                                 style: ButtonStyle(
                                   backgroundColor:

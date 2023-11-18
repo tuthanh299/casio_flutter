@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-
-import 'Login.dart';
+import 'package:flutter/material.dart'; 
+import 'package:casio_flutter/screens/login.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
