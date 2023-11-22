@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "610005404953",
-    "project_id": "watchapp-10370",
-    "storage_bucket": "watchapp-10370.appspot.com"
+    "project_number": "997883241746",
+    "project_id": "android-app-e5721",
+    "storage_bucket": "android-app-e5721.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:610005404953:android:ea4d94a2870af7d39d4988",
+        "mobilesdk_app_id": "1:997883241746:android:555bdc36836899f4653fcb",
         "android_client_info": {
           "package_name": "com.example.casio_flutter"
         }
@@ -15,26 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC4GG32lncVz0pYZAPfHnmfajwr73x1FAs"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:610005404953:android:35bfe3b51d72d2859d4988",
-        "android_client_info": {
-          "package_name": "watchapp.com"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyC4GG32lncVz0pYZAPfHnmfajwr73x1FAs"
+          "current_key": "AIzaSyBiIefcvglsCSrF-7XR7vPHJIXQ1ZPwO_E"
         }
       ],
       "services": {
