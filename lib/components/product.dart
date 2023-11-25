@@ -1,20 +1,21 @@
-import 'package:flutter/material.dart';
-
 import '../screens/product_detail_screen.dart';
+import 'package:flutter/material.dart';
 
 class Product extends StatelessWidget {
   Product({
     Key? key,
     required this.src,
-    required this.price,
+    this.price,
     required this.name,
-    required this.sale,
+    this.sale,
+    required this.prodId
   }) : super(key: key);
 
+  String prodId;
   String src = '';
-  String price = '';
+  int? price = 0;
   String name = '';
-  String sale;
+  int? sale;
 
 
   @override
@@ -24,12 +25,13 @@ class Product extends StatelessWidget {
       InkWell(
         onTap: () {
           Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const ProductDetail()),
-                  );
+              MaterialPageRoute(builder: (context) => ProductDetail( /* productId : prodId, */ ))
+          );
         },
-        child: Container(
-            padding: const EdgeInsets.all(10.0),
-            margin: const EdgeInsets.fromLTRB(5, 10, 5, 10),
+        child: Center(
+          child: Container(
+            //padding: const EdgeInsets.all(10.0),
+            margin: const EdgeInsets.fromLTRB(15, 15, 15, 15),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5.0),
                 border: Border.all(
@@ -41,8 +43,8 @@ class Product extends StatelessWidget {
               children: [
                 Image(
                   image: AssetImage(src),
-                  height: 125,
-                  width: 125,
+                  height: 110,
+                  width: 110,
                 ),
                 const SizedBox(height: 5,),
                 Text(
@@ -54,31 +56,35 @@ class Product extends StatelessWidget {
                 ),
                 const SizedBox(height: 5,),
                 //gia
-                checksale(sale, price)
+                checksale(sale!, price!)
                 //end gia
               ],
-            )
-        ),
+            ),
+          ),
+        )
       );
     //end components
   }
 }
 
-checksale(String sale, String price) {
-  if (sale == '0') {
-    return Text(price,
+checksale(int sale, int price) {
+  if (sale == 0) {
+    return Text('$priceđ',
       style: const TextStyle(
         color: Colors.red,
         fontSize: 13,
       ),
     );
   } else {
-    return                 //có sale
+    //có sale
+    double saleprice = price - (price * (sale / 100));
+    return
       Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           //giá giảm
           Text(
-            sale,
+            '$salepriceđ',
             style: const TextStyle(
                 color: Colors.red,
                 fontSize: 13
@@ -87,7 +93,8 @@ checksale(String sale, String price) {
           //end giá giảm
           const SizedBox(width: 5,),
           //giá gốc
-          Text(price,
+          Text(
+            '$priceđ',
             style: const TextStyle(
               color: Colors.grey,
               fontSize: 13,
