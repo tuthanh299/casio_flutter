@@ -128,55 +128,7 @@ class _HomeState extends State<Home> {
                   }
                 },
               ),
-              /*Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      //components
-                      Product(
-                        prodId: '',
-                        src: 'assets/imgs/ga-2140re-1a.jpg',
-                        price: 3999000,
-                        name: 'CASIO GA-2140RE-1A',
-                        sale: 0,
-                      ),
-                      //end components
-                      //components
-                      Product(
-                        prodId: '',
-                        src: 'assets/imgs/ga-2140re-1a.jpg',
-                        price: 3999000,
-                        name: 'CASIO GA-2140RE-1A',sale: 0,
-                      ),
-                      //end components
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      //components
-                      Product(
-                        prodId: '',
-                        src: 'assets/imgs/ga-2140re-1a.jpg',
-                        price: 3999000,
-                        name: 'CASIO GA-2140RE-1A',
-                        sale: 0,
-                      ),
-                      //end components
-                      //components
-                      Product(
-                        prodId: '',
-                        src: 'assets/imgs/ga-2140re-1a.jpg',
-                        price: 3999000,
-                        name: 'CASIO GA-2140RE-1A',
-                        sale: 0,
-                      ),
-                      //end components
-                    ],
-                  ),
-                ],
-              ),*/
+               
               //end nam
               //nu
               const Padding(

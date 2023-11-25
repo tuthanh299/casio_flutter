@@ -1,8 +1,7 @@
 
+import 'package:casio_flutter/screens/register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import 'package:casio_flutter/screens/register.dart';
 
 import 'auth.dart';
 
@@ -247,9 +246,16 @@ class _LoginState extends State<Login> {
                         style: TextStyle(color: Colors.blue)
                     ),
                   )
-                ],
+                                  ],
               ),
               //end nút chuyển trang
+             Column(
+               crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text('Mọi thông tin cần hỗ trợ vui lòng liên hệ ',style: TextStyle(fontSize:16),),
+                Text('qua email: gshock.support@gmail.com để được hỗ trợ!',style: TextStyle(fontSize:16),)
+                ],
+             )
             ],
           ),
         ),

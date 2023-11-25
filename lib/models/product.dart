@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+/* Khai bao bien */
 class Product2 {
   String? id;
   String? user_id;
@@ -10,7 +10,7 @@ class Product2 {
   String? desc;
   bool? star;
   bool antiwater;
-
+/* Khai bao lai lan nua */
   Product2({
     this.id,
     this.user_id,
@@ -22,7 +22,7 @@ class Product2 {
     this.star,
     required this.antiwater
   });
-
+/* Đọc dữ liệu từ firebase to json */
   Map<String, dynamic> toJSON() => {
     'id': id,
     'user_id': user_id,
@@ -35,6 +35,12 @@ class Product2 {
     'antiwater': antiwater,
   };
 
+
+
+
+  
+  /* --- */
+/* Đẩy dữ liệu từ json lên firebase */
   static Product2 fromJSON(Map<String, dynamic> json) => Product2(
     id: json['id'],
     user_id: json['user_id'],
@@ -44,35 +50,7 @@ class Product2 {
     thumbnail: json['thumbnail'],
     desc: json['desc'],
     star: json['star'],
-    antiwater: json['antiwater'],
-  );
-
-  Map<String, dynamic> toFirestore() {
-    return {
-      if (id != null) "id": id,
-      if (user_id != null) "user_id": user_id,
-      if (discount != null) "discount": discount,
-      if (thumbnail != null) "thumbnail": thumbnail,
-      if (desc != null) "desc": desc,
-      if (star != null) "star": star,
-    };
-  }
-
-  factory Product2.fromFirestore(
-      DocumentSnapshot<Map<String, dynamic>> snapshot,
-      SnapshotOptions? options,
-      ) {
-    final data = snapshot.data();
-    return Product2(
-      id: data?['id'],
-      user_id: data?['user_id'],
-      name: data?['name'],
-      price: data?['price'],
-      discount: data?['discount'],
-      thumbnail: data?['thumbnail'],
-      desc: data?['desc'],
-      star: data?['star'],
-      antiwater: data?['antiwater'],
-    );
-  }
+    antiwater: json['antiwater'], 
+  ); 
+   
 }

@@ -30,26 +30,5 @@ class User1 {
     address: json['address'],
     number: json['number'],
   );
-
-  Map<String, dynamic> toFirestore() {
-    return {
-      if (fullname != null) "fullname": fullname,
-      if (email != null) "email": email,
-      if (address != null) "address": address,
-      if (number != null) "number": number,
-    };
-  }
-
-  factory User1.fromFirestore(
-      DocumentSnapshot<Map<String, dynamic>> snapshot,
-      SnapshotOptions? options,
-      ) {
-    final data = snapshot.data();
-    return User1(
-      fullname: data?['fullname'],
-      email: data?['email'],
-      address: data?['address'],
-      number: data?['number'],
-    );
-  }
+ 
 }

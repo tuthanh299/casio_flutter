@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../screens/login.dart';
 import '../components/provider.dart';
 import '../models/user.dart';
+import '../screens/login.dart';
 
 
 class Register extends StatefulWidget {
@@ -349,13 +349,7 @@ class _RegisterState extends State<Register> {
                           const SnackBar(
                               content: Text('Password không trùng khớp')));
                     }
-                    /*else if (checkUser){
-                      ScaffoldMessenger.of(context).clearSnackBars();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text('Username đã được dùng'))
-                      );
-                    }*/
+                     
                     else if (checkMail){
                       ScaffoldMessenger.of(context).clearSnackBars();
                       ScaffoldMessenger.of(context).showSnackBar(
