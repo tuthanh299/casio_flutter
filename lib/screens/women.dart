@@ -58,38 +58,19 @@ class _WomenState extends State<Women> {
               //components
               Product(
                 src: 'assets/imgs/ga-2140re-1a.jpg',
-                price: '3.999.000đ',
+                price: 1500000,
                 name: 'CASIO GA-2140RE-1A',
-                sale: '0',
+                sale: 10,
+                prodId: '2',
               ),
               //end components
               //components
               Product(
                 src: 'assets/imgs/ga-2140re-1a.jpg',
-                price: '3.999.000đ',
+                price: 1500000,
                 name: 'CASIO GA-2140RE-1A',
-                sale: '0',
-              ),
-              //end components
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              //components
-              Product(
-                src: 'assets/imgs/ga-2140re-1a.jpg',
-                price: '3.999.000đ',
-                name: 'CASIO GA-2140RE-1A',
-                sale: '0',
-              ),
-              //end components
-              //components
-              Product(
-                src: 'assets/imgs/ga-2140re-1a.jpg',
-                price: '3.999.000đ',
-                name: 'CASIO GA-2140RE-1A',
-                sale: '0',
+                sale: 10,
+                 prodId: '2',
               ),
               //end components
             ],
@@ -100,17 +81,19 @@ class _WomenState extends State<Women> {
               //components
               Product(
                 src: 'assets/imgs/ga-2140re-1a.jpg',
-                price: '3.999.000đ',
+                price: 1500000,
                 name: 'CASIO GA-2140RE-1A',
-                sale: '0',
+                sale: 10,
+                 prodId: '2',
               ),
               //end components
               //components
               Product(
                 src: 'assets/imgs/ga-2140re-1a.jpg',
-                price: '3.999.000đ',
+                price: 1500000,
                 name: 'CASIO GA-2140RE-1A',
-                sale: '0',
+                sale: 10,
+                 prodId: '2',
               ),
               //end components
             ],
@@ -121,17 +104,42 @@ class _WomenState extends State<Women> {
               //components
               Product(
                 src: 'assets/imgs/ga-2140re-1a.jpg',
-                price: '3.999.000đ',
+                price: 1500000,
                 name: 'CASIO GA-2140RE-1A',
-                sale: '0',
+                sale: 10,
+                 prodId: '2',
               ),
               //end components
               //components
               Product(
                 src: 'assets/imgs/ga-2140re-1a.jpg',
-                price: '3.999.000đ',
+                price: 1500000,
                 name: 'CASIO GA-2140RE-1A',
-                sale: '0',
+                sale: 10,
+                 prodId: '2',
+              ),
+              //end components
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              //components
+              Product(
+                src: 'assets/imgs/ga-2140re-1a.jpg',
+                price: 1500000,
+                name: 'CASIO GA-2140RE-1A',
+                sale: 10,
+                 prodId: '2',
+              ),
+              //end components
+              //components
+              Product(
+                src: 'assets/imgs/ga-2140re-1a.jpg',
+                price: 1500000,
+                name: 'CASIO GA-2140RE-1A',
+                sale: 10,
+                 prodId: '2',
               ),
               //end components
             ],

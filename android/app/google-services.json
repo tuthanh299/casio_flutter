@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "997883241746",
+    "project_id": "android-app-e5721",
+    "storage_bucket": "android-app-e5721.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:997883241746:android:555bdc36836899f4653fcb",
+        "android_client_info": {
+          "package_name": "com.example.casio_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBiIefcvglsCSrF-7XR7vPHJIXQ1ZPwO_E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
