@@ -1,7 +1,7 @@
-import '/screens/order_screen.dart';
-
-import 'edit_address_screen.dart';
 import 'package:flutter/material.dart';
+
+import '/screens/order_screen.dart';
+import 'edit_address_screen.dart';
 
 class OrderDetail extends StatefulWidget {
   const OrderDetail({super.key});

@@ -35,6 +35,9 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  firebase_core: ^2.23.0
+  firebase_auth: ^4.14.1
+  cloud_firestore: ^4.13.2
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +67,97 @@ flutter:
     - assets/imgs/topbanner.png
     - assets/imgs/ga-2140re-1a.jpg
     - assets/imgs/bottombanner.jpg
+    - assets/imgs/BA-110XWS-7A.png
+    - assets/imgs/BA-110XWS-7AA.png
+    - assets/imgs/BA-110XWS-7AB.png
+    - assets/imgs/BG-169PB-2.jpg
+    - assets/imgs/BG-169PB-2.png
+    - assets/imgs/BG-169PB-2A.jpg
+    - assets/imgs/BG-169PB-2B.jpg
+    - assets/imgs/BGA-290PA-4A.png
+    - assets/imgs/BGA-290PA-4AA.jpg
+    - assets/imgs/BGA-290PA-4AB.png
+    - assets/imgs/BGA-290SA-2A.png
+    - assets/imgs/BGA-290SA-2AA.png
+    - assets/imgs/BGA-290SA-2AB.png
+    - assets/imgs/BGA-310RP-3A.png
+    - assets/imgs/BGA-310RP-3AA.png
+    - assets/imgs/BGA-310RP-3AB.jpg
+    - assets/imgs/BGA-320-9A.png
+    - assets/imgs/BGA-320-9AA.png
+    - assets/imgs/BGA-320-9AB.png
+    - assets/imgs/BGD-565RP-4.png
+    - assets/imgs/BGD-565RP-4A.png
+    - assets/imgs/BGD-565RP-4B.png
+    - assets/imgs/BGD-565RP-7.png
+    - assets/imgs/BGD-565RP-7A.png
+    - assets/imgs/BGD-565RP-7B.png
+    - assets/imgs/BGD-565SC-2.png
+    - assets/imgs/BGD-565SC-2A.png
+    - assets/imgs/BGD-565SC-2B.png
+    - assets/imgs/BGD-565TW-5.png
+    - assets/imgs/BGD-565TW-5A.png
+    - assets/imgs/BGD-565TW-5B.png
+    - assets/imgs/GMD-B800SC-1.png
+    - assets/imgs/GMD-B800SC-1A.png
+    - assets/imgs/GMD-B800SC-1B.png
+    - assets/imgs/GM-S2100-3A.png
+    - assets/imgs/GM-S2100-3AA.png
+    - assets/imgs/GM-S2100-3AB.png
+    - assets/imgs/GM-S2100B-8A.png
+    - assets/imgs/GM-S2100B-8AA.png
+    - assets/imgs/GM-S2100B-8AB.png
+    - assets/imgs/GM-S2100PG-1A4.png
+    - assets/imgs/GM-S2100PG-1A4A.png
+    - assets/imgs/GM-S2100PG-1A4B.png
+    - assets/imgs/GM-S5600-1.png
+    - assets/imgs/GM-S5600-1A.png
+    - assets/imgs/GM-S5600-1B.png
+    - assets/imgs/GM-S5600G-7.png
+    - assets/imgs/GM-S5600G-7A.png
+    - assets/imgs/GM-S5600G-7B.png
+    - assets/imgs/GM-S5600PG-1.png
+    - assets/imgs/GM-S5600PG-1A.png
+    - assets/imgs/GM-S5600PG-1B.png
+    - assets/imgs/LOV-22A-7A.png
+    - assets/imgs/LOV-22A-7AA.png
+    - assets/imgs/LOV-22A-7AB.png
+    - assets/imgs/LOV-23A-7.png
+    - assets/imgs/LOV-23A-7A.png
+    - assets/imgs/LOV-23A-7B.png
+    - assets/imgs/MRG-B1000BA-1A.png
+    - assets/imgs/MRG-B1000BA-1AA.png
+    - assets/imgs/MRG-B1000BA-1AB.png
+    - assets/imgs/MRG-B2000BS.png
+    - assets/imgs/MRG-B2000BSA.jpeg
+    - assets/imgs/MRG-B2000BSB.jpeg
+    - assets/imgs/MRG-B2000SH.png
+    - assets/imgs/MRG-B2000SHA.jpeg
+    - assets/imgs/MRG-B2000SHB.jpeg
+    - assets/imgs/MRG-B5000B-1.png
+    - assets/imgs/MRG-B5000B-1A.jpg
+    - assets/imgs/MRG-B5000B-1B.jpg
+    - assets/imgs/MRG-B5000BA-1.png
+    - assets/imgs/MRG-B5000BA-1A.png
+    - assets/imgs/MRG-B5000BA-1B.png
+    - assets/imgs/MRG-B5000D-1.png
+    - assets/imgs/MRG-B5000D-1A.png
+    - assets/imgs/MRG-B5000D-1B.png
+    - assets/imgs/MTG-B1000TJ-1A.png
+    - assets/imgs/MTG-B1000TJ-1AA.png
+    - assets/imgs/MTG-B1000TJ-1AB.png
+    - assets/imgs/MTG-B2000.png
+    - assets/imgs/MTG-B2000A.png
+    - assets/imgs/MTG-B2000B.png
+    - assets/imgs/MTG-B2000PH.png
+    - assets/imgs/MTG-B2000PHA.jpg
+    - assets/imgs/MTG-B2000PHB.png
+    - assets/imgs/MTG-B3000.png
+    - assets/imgs/MTG-B3000A.png
+    - assets/imgs/MTG-B3000B.png
+    - assets/imgs/SLV-22A-9A.png
+    - assets/imgs/SLV-22A-9AA.png
+    - assets/imgs/SLV-22A-9AB.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
