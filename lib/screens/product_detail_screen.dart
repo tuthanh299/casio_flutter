@@ -1,7 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../components/provider.dart';
 import 'package:flutter/material.dart';
+import '../models/product.dart';
 
 class ProductDetail extends StatefulWidget {
-  const ProductDetail({super.key});
+  ProductDetail({
+    required this.productId,
+    super.key,
+  });
+
+  final String productId;
 
   @override
   State<ProductDetail> createState() => _ProductDetailState();
@@ -11,70 +19,119 @@ class _ProductDetailState extends State<ProductDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        body: /*FutureBuilder(
+        future: getProduct(widget.productId),
+        builder: (context, snapshot) {
+          if(snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator(),);
+          } else if (snapshot.hasError) {
+            return const Center(child: Text('Đã xảy ra sự cố'),);
+          } else if(!snapshot.hasData) {
+            return const Center(child: Text('Không có dữ liệu'),);
+          } else {
+            final prod = snapshot.data;
+            final gallery = FirebaseFirestore.instance.collection('gallery').where('product_id', isEqualTo: prod?.id);
+            return prod == null
+                ? const Center(child: Text('Đã xảy ra sự cố'),)
+                : Center(child: buildProd(prod));
+          }
+        }
+      )*/
+            FutureBuilder(
+                future: getProductAndGallery(widget.productId),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasError) {
+                    return const Center(
+                      child: Text('Đã xảy ra sự cố'),
+                    );
+                  } else if (!snapshot.hasData) {
+                    return const Center(
+                      child: Text('Không có dữ liệu'),
+                    );
+                  } else {
+                    final prod = snapshot.data;
+                    //final gallery = FirebaseFirestore.instance.collection('gallery').where('product_id', isEqualTo: prod?.id).snapshots();
+                    return prod == null
+                        ? const Center(
+                            child: Text('Đã xảy ra sự cố'),
+                          )
+                        : Center(child: buildProd2(prod));
+                  }
+                }));
+  }
+
+  Widget buildProd(Product2 prod) => ListView(
         children: [
-          Padding(
-              padding: const EdgeInsets.only(top: 50, left: 2),
-              child: IconButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                icon: const Icon(
-                  Icons.arrow_back,
-                  size: 50,
-                ),
-              )),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Image.asset(
-                  'assets/imgs/ga-2140re-1a.jpg',
-                  height: 200,
-                  width: 200,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Column(
+                  padding: const EdgeInsets.only(top: 50, left: 2),
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      size: 50,
+                    ),
+                  )),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: Image.asset(
-                      'assets/imgs/ga-2140re-1a.jpg',
-                      height: 100,
-                      width: 100,
+                      prod.thumbnail![0],
+                      height: 200,
+                      width: 200,
                       fit: BoxFit.cover,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Image.asset(
-                      'assets/imgs/ga-2140re-1a.jpg',
-                      height: 100,
-                      width: 100,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Image.asset(
+                          prod.thumbnail![0],
+                          height: 100,
+                          width: 100,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Image.asset(
+                          prod.thumbnail![0],
+                          height: 100,
+                          width: 100,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ],
+                  )
                 ],
-              )
-            ],
-          ),
-          const Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Text(
-              'Đồng Hồ Nữ Chính Hãng CASIO LTP-1094E-1A',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-            ),
-          ),
-          const Row(
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text(
+                  prod.name,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 15),
+                ),
+              ),
+              checksale(prod.discount, prod.price),
+              /*Row(
             children: [
               Padding(
-                padding: EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Text(
-                  '752.000 đ',
-                  style: TextStyle(
+                  prod.price.toString(),
+                  style: const TextStyle(
                       color: Colors.grey,
                       fontWeight: FontWeight.bold,
                       decoration: TextDecoration.lineThrough),
@@ -83,7 +140,7 @@ class _ProductDetailState extends State<ProductDetail> {
               Padding(
                 padding: EdgeInsets.all(5.0),
                 child: Text(
-                  '752.000 đ',
+                  (prod.price - (prod.price - prod.discount! / 100)).toString(),
                   style: TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.bold,
@@ -91,72 +148,268 @@ class _ProductDetailState extends State<ProductDetail> {
                 ),
               ),
             ],
+          ),*/
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text(
+                  prod.desc!,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.normal, fontSize: 15),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: RichText(
+                  text: TextSpan(
+                      text: 'Chống nước: ',
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 15),
+                      children: [
+                        TextSpan(
+                            text: prod.antiwater ? 'có' : 'không',
+                            style: const TextStyle(
+                                fontWeight: FontWeight.normal, fontSize: 15))
+                      ]),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.red),
+                      ),
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                  title: const Text(
+                                    'Đã thêm vào giỏ',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  actions: [
+                                    Container(
+                                      padding: const EdgeInsets.only(right: 80),
+                                      child: ElevatedButton(
+                                          style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    Colors.green),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text('Xác nhận')),
+                                    )
+                                  ],
+                                ));
+                      },
+                      child: const Text('thêm vào giỏ'),
+                    ),
+                  )
+                ],
+              )
+            ],
           ),
-          const Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Text(
-              'Mẫu đồng hồ có kích thước nhỏ của dòng 5600 mang tính biểu tượng hoàn thiện bằng chất liệu kim loại sang trọng. Thiết kế vuông vắn của GM-5600, được sử dụng ngay từ mẫu đầu tiên, đã được giảm bớt kích thước để đạt được trọng lượng nhẹ và vừa vặn. Vỏ đường gờ được làm bằng kim loại mạ ion vàng hồng và dây đeo là dây đeo G-SHOCK màu be sang trọng.',
-              style: TextStyle(fontWeight: FontWeight.normal, fontSize: 15),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: RichText(
-              text: const TextSpan(
-                  text: 'Chống nước: ',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.normal,
-                      fontSize: 15),
-                  children: [
-                    TextSpan(
-                        text: 'có',
-                        style: TextStyle(
-                            fontWeight: FontWeight.normal, fontSize: 15))
-                  ]),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+        ],
+      );
+
+  Widget buildProd2(Product2 prod) => ListView(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                  padding: const EdgeInsets.only(top: 50, left: 2),
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      size: 50,
+                    ),
+                  )),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Image.asset(
+                      prod.thumbnail![0],
+                      height: 200,
+                      width: 200,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Image.asset(
+                          prod.thumbnail![1],
+                          height: 100,
+                          width: 100,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Image.asset(
+                          prod.thumbnail![2],
+                          height: 100,
+                          width: 100,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text(
+                  prod.name,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 15),
+                ),
+              ),
+              checksale(prod.discount, prod.price),
+              /*Row(
             children: [
               Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.red),
-                  ),
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                              title: const Text(
-                                'Đã thêm vào giỏ',
-                                textAlign: TextAlign.center,
-                              ),
-                              actions: [
-                                Container(
-                                  padding: const EdgeInsets.only(right: 80),
-                                  child: ElevatedButton(
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Colors.green),
-                                      ),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: const Text('Xác nhận')),
-                                )
-                              ],
-                            ));
-                  },
-                  child: const Text('thêm vào giỏ'),
+                child: Text(
+                  prod.price.toString(),
+                  style: const TextStyle(
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.lineThrough),
                 ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(5.0),
+                child: Text(
+                  (prod.price - (prod.price - prod.discount! / 100)).toString(),
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),*/
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text(
+                  prod.desc!,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.normal, fontSize: 15),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: RichText(
+                  text: TextSpan(
+                      text: 'Chống nước: ',
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 15),
+                      children: [
+                        TextSpan(
+                            text: prod.antiwater ? 'có' : 'không',
+                            style: const TextStyle(
+                                fontWeight: FontWeight.normal, fontSize: 15))
+                      ]),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.red),
+                      ),
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                  title: const Text(
+                                    'Đã thêm vào giỏ',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  actions: [
+                                    Container(
+                                      padding: const EdgeInsets.only(right: 80),
+                                      child: ElevatedButton(
+                                          style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    Colors.green),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text('Xác nhận')),
+                                    )
+                                  ],
+                                ));
+                      },
+                      child: const Text('thêm vào giỏ'),
+                    ),
+                  )
+                ],
               )
             ],
-          )
+          ),
         ],
-      ),
-    );
+      );
+
+  checksale(int? sale, int price) {
+    if (sale == 0) {
+      return Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Text(
+          '$priceđ',
+          style: const TextStyle(
+              color: Colors.grey,
+              fontWeight: FontWeight.bold,
+              decoration: TextDecoration.lineThrough),
+        ),
+      );
+    } else {
+      double saleprice = (price - (price * sale! / 100));
+      return Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Text(
+              '$priceđ',
+              style: const TextStyle(
+                  color: Colors.grey,
+                  fontWeight: FontWeight.bold,
+                  decoration: TextDecoration.lineThrough),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Text(
+              '$salepriceđ',
+              style: const TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      );
+    }
   }
 }
