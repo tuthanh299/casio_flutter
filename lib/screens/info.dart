@@ -1,6 +1,10 @@
-import 'package:casio_flutter/screens/changepass.dart';
-import 'package:casio_flutter/screens/editinfo.dart';
+import '../screens/changepass.dart';
+
+import '../components/provider.dart';
+import '../screens/editinfo.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../models/user.dart';
 
 class Info extends StatefulWidget {
   const Info({Key? key}) : super(key: key);
@@ -11,6 +15,8 @@ class Info extends StatefulWidget {
 
 class _InfoState extends State<Info> {
   double cochu = 18;
+  String uid = FirebaseAuth.instance.currentUser!.uid;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,10 +28,10 @@ class _InfoState extends State<Info> {
               const SizedBox(
                 height: 40,
               ),
-              Center(
+              const Center(
                   child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   /*GestureDetector(
                             onTap: () {
                               Navigator.of(context).pop();
@@ -58,98 +64,27 @@ class _InfoState extends State<Info> {
                 height: 40,
               ),
               //thông tin người dùng
-              Container(
-                padding: EdgeInsets.all(MediaQuery.of(context).size.width / 25),
-                margin: EdgeInsets.all(MediaQuery.of(context).size.width / 25),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Tài khoản: ',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: cochu),
-                        ),
-                        Text(
-                          'ductoan298',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: cochu),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          'Họ tên: ',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: cochu),
-                        ),
-                        Text(
-                          'Lê Thanh Tú',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: cochu),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          'Số điện thoại: ',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: cochu),
-                        ),
-                        Text(
-                          '0123456789',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: cochu),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          'Email: ',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: cochu),
-                        ),
-                        Text(
-                          'demo@gmail.com',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: cochu),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Địa chỉ: ',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: cochu),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      '65 Đ. Huỳnh Thúc Kháng, Bến Nghé, Quận 1, Thành phố Hồ Chí Minh',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: cochu),
-                    ),
-                  ],
-                ),
-              ),
+              FutureBuilder<User1>(
+                  future: getUser(uid),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshot.hasError) {
+                      return const Center(child: Text('Lỗi'));
+                    } else if (!snapshot.hasData) {
+                      return const Center(child: Text('Không có dữ liệu'));
+                    } else {
+                      final user = snapshot.data;
+                      return user == null
+                          ? const Center(
+                              child: Text('Đã xảy ra sự cố'),
+                            )
+                          : buildInfo(user);
+                    }
+                  }),
+              //end thong tin nguoi dung
               SizedBox(
                 height: MediaQuery.of(context).size.height / 23,
               ),
@@ -157,8 +92,7 @@ class _InfoState extends State<Info> {
               InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const ChangePass())
-                      );
+                      builder: (context) => const ChangePass()));
                 },
                 child: Container(
                   margin: const EdgeInsets.all(10),
@@ -176,9 +110,7 @@ class _InfoState extends State<Info> {
               InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>
-                              const EditInfo())
-                      );
+                      builder: (context) => const EditInfo()));
                 },
                 child: Container(
                   margin: const EdgeInsets.all(10),
@@ -195,7 +127,9 @@ class _InfoState extends State<Info> {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.of(context).pop();
+                  setState(() async {
+                    await FirebaseAuth.instance.signOut();
+                  });
                 },
                 child: Container(
                   margin: const EdgeInsets.all(10),
@@ -210,39 +144,86 @@ class _InfoState extends State<Info> {
                   ),
                 ),
               ),
-              //enc các nút
+              //end các nút
             ],
           )),
           //navbar
-          /*NavigationBar(
-            height: 30,
-            destinations: const [
-              NavigationDestination(
-                icon: Icon(Icons.home_outlined, color: Colors.white,),
-                label: '',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.search_outlined, color: Colors.white,),
-                label: '',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.menu_outlined, color: Colors.white,),
-                label: '',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.shopping_cart_outlined, color: Colors.white,),
-                label: '',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.person_outline_outlined, color: Colors.white,),
-                label: '',
-              ),
-            ],
-            backgroundColor: Colors.black,
-          )*/
-          //end navbar
         ],
       ),
     );
   }
+
+  Widget buildInfo(User1 us) => Container(
+        padding: EdgeInsets.all(MediaQuery.of(context).size.width / 25),
+        margin: EdgeInsets.all(MediaQuery.of(context).size.width / 25),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Text(
+                  'Họ tên: ',
+                  style:
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: cochu),
+                ),
+                Text(
+                  us.fullname!,
+                  style:
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: cochu),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Text(
+                  'Số điện thoại: ',
+                  style:
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: cochu),
+                ),
+                Text(
+                  us.number!,
+                  style:
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: cochu),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Text(
+                  'Email: ',
+                  style:
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: cochu),
+                ),
+                Text(
+                  us.email!,
+                  style:
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: cochu),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Địa chỉ: ',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: cochu),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              us.address!,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: cochu),
+            ),
+          ],
+        ),
+      );
 }
