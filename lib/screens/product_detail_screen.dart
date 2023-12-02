@@ -1,9 +1,10 @@
+import 'package:casio_flutter/components/provider.dart';
+import 'package:casio_flutter/models/cart_item.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../components/provider.dart';
-import '../models/cart_item.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import '../models/product.dart';
 
 class ProductDetail extends StatefulWidget {
@@ -25,20 +26,17 @@ class _ProductDetailState extends State<ProductDetail> {
   var oCcy = NumberFormat("#,###đ", "vi_VN");
 
   fetch() async {
-    var records =
-        await FirebaseFirestore.instance.collection('cartitems').get();
+    var records = await FirebaseFirestore.instance.collection('cartitems').get();
     getAllOrder(records);
   }
 
   getAllOrder(QuerySnapshot<Map<String, dynamic>> records) {
-    var list = records.docs
-        .map((e) => CartItem1(
-              productID: e['productID'],
-              uid: e['uid'],
-              qty: e['qty'],
-              cartItemId: e['cartItemId'],
-            ))
-        .toList();
+    var list = records.docs.map((e) => CartItem1(
+      productID: e['productID'],
+      uid: e['uid'],
+      qty: e['qty'],
+      cartItemId: e['cartItemId'],
+    )).toList();
     allcartitem = list;
   }
 
@@ -52,34 +50,28 @@ class _ProductDetailState extends State<ProductDetail> {
   @override
   Widget build(BuildContext context) {
     bool checkDup = false;
-
+    
     return Scaffold(
-        key: _scaffoldKey,
-        body: FutureBuilder(
-            future: getProductAndGallery(widget.productId),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (snapshot.hasError) {
-                return const Center(
-                  child: Text('Đã xảy ra sự cố'),
-                );
-              } else if (!snapshot.hasData) {
-                return const Center(
-                  child: Text('Không có dữ liệu'),
-                );
-              } else {
-                final prod = snapshot.data;
-                //final gallery = FirebaseFirestore.instance.collection('gallery').where('product_id', isEqualTo: prod?.id).snapshots();
-                return prod == null
-                    ? const Center(
-                        child: Text('Đã xảy ra sự cố'),
-                      )
-                    : Center(child: buildProd2(prod, checkDup));
-              }
-            }));
+      key: _scaffoldKey,
+      body: FutureBuilder(
+          future: getProductAndGallery(widget.productId),
+          builder: (context, snapshot) {
+            if(snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator(),);
+            } else if (snapshot.hasError) {
+              return const Center(child: Text('Đã xảy ra sự cố'),);
+            } else if(!snapshot.hasData) {
+              return const Center(child: Text('Không có dữ liệu'),);
+            } else {
+              final prod = snapshot.data;
+              //final gallery = FirebaseFirestore.instance.collection('gallery').where('product_id', isEqualTo: prod?.id).snapshots();
+              return prod == null
+                  ? const Center(child: Text('Đã xảy ra sự cố'),)
+                  : Center(child: buildProd2(prod, checkDup));
+            }
+          }
+      )
+    );
   }
 
   Widget buildProd2(Product2 prod, bool check) {
@@ -141,8 +133,7 @@ class _ProductDetailState extends State<ProductDetail> {
               padding: const EdgeInsets.all(20.0),
               child: Text(
                 prod.name,
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
               ),
             ),
             checksale(prod.discount, prod.price),
@@ -150,8 +141,7 @@ class _ProductDetailState extends State<ProductDetail> {
               padding: const EdgeInsets.all(20.0),
               child: Text(
                 prod.desc!,
-                style: const TextStyle(
-                    fontWeight: FontWeight.normal, fontSize: 15),
+                style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 15),
               ),
             ),
             Padding(
@@ -185,9 +175,7 @@ class _ProductDetailState extends State<ProductDetail> {
                       //co san pham => sua so luong
                       //kiem tra gio hang, co thi cho dung va lay id, chuyen trang thai checkDup de tien hanh update
                       for (var list in allcartitem) {
-                        if (list.productID.toString() == widget.productId &&
-                            list.uid ==
-                                FirebaseAuth.instance.currentUser!.uid) {
+                        if (list.productID.toString() == widget.productId && list.uid == FirebaseAuth.instance.currentUser!.uid) {
                           cartItemId = list.cartItemId;
                           qty_temp = list.qty;
                           check = true;
@@ -197,40 +185,39 @@ class _ProductDetailState extends State<ProductDetail> {
                       //end kiem tra
                       //check trang thai checkDup
                       if (check) {
-                        FirebaseFirestore.instance
+                        FirebaseFirestore
+                            .instance
                             .collection('cartitems')
                             .doc(cartItemId)
-                            .update({'qty': qty_temp! + 1}).then((value) {
+                            .update({
+                          'qty': qty_temp! + 1
+                        }).then((value) {
                           showDialog(
                               context: context,
                               builder: (context) => AlertDialog(
-                                    title: const Text(
-                                      'Đã thêm vào giỏ',
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    actions: [
-                                      Container(
-                                        padding:
-                                            const EdgeInsets.only(right: 80),
-                                        child: ElevatedButton(
-                                            style: ButtonStyle(
-                                              backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                      Colors.green),
-                                            ),
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: const Text('Xác nhận')),
-                                      )
-                                    ],
-                                  ));
+                                title: const Text(
+                                  'Đã thêm vào giỏ',
+                                  textAlign: TextAlign.center,
+                                ),
+                                actions: [
+                                  Container(
+                                    padding: const EdgeInsets.only(right: 80),
+                                    child: ElevatedButton(
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.green),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text('Xác nhận')),
+                                  )
+                                ],
+                              ));
                         });
                       } else {
-                        final temp_cartid = FirebaseFirestore.instance
-                            .collection('cartitems')
-                            .doc()
-                            .id;
+                        final temp_cartid = FirebaseFirestore.instance.collection('cartitems').doc().id;
                         final cart = CartItem1(
                           cartItemId: temp_cartid,
                           productID: widget.productId,
@@ -241,43 +228,36 @@ class _ProductDetailState extends State<ProductDetail> {
                           showDialog(
                               context: context,
                               builder: (context) => AlertDialog(
-                                    title: const Text(
-                                      'Đã thêm vào giỏ',
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    actions: [
-                                      Container(
-                                        padding:
-                                            const EdgeInsets.only(right: 80),
-                                        child: ElevatedButton(
-                                            style: ButtonStyle(
-                                              backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                      Colors.green),
-                                            ),
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: const Text(
-                                              'Xác nhận',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                              ),
-                                            )),
-                                      )
-                                    ],
-                                  ));
+                                title: const Text(
+                                  'Đã thêm vào giỏ',
+                                  textAlign: TextAlign.center,
+                                ),
+                                actions: [
+                                  Container(
+                                    padding: const EdgeInsets.only(right: 80),
+                                    child: ElevatedButton(
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.green),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text('Xác nhận', style: TextStyle(
+                                          color: Colors.white,
+                                        ),)),
+                                  )
+                                ],
+                              ));
                         });
                       }
                     },
                     //end tao moi
 
-                    child: const Text(
-                      'thêm vào giỏ',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
+                    child: const Text('thêm vào giỏ', style: TextStyle(
+                      color: Colors.white,
+                    ),),
                   ),
                 ),
               ],

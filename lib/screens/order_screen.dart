@@ -325,47 +325,48 @@ class _OrderState extends State<Order> {
                       ),
                     ],
                   )),
-              StreamBuilder(
-                  stream: doubleStreamController.stream,
-                  builder: (context, streamSnapshot) {
-                    if (streamSnapshot.connectionState ==
-                        ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (streamSnapshot.hasError) {
-                      return const Center(
-                        child: Text('Lỗi'),
-                      );
-                    } else if (!streamSnapshot.hasData) {
-                      return const Center(
-                        child: Text('Không có dữ liệu'),
-                      );
-                    } else {
-                      final docs = streamSnapshot.data!;
-                      return Padding(
-                        padding: EdgeInsets.only(
-                          left: finalproductsize(finaltotalprice),
-                          top: 10,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Tổng: ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 13),
-                            ),
-                            Text(
-                              oCcy.format(docs),
-                              style: const TextStyle(
-                                color: Colors.red,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                  }),
+              // StreamBuilder(
+              //     stream: doubleStreamController.stream,
+              //     builder: (context, streamSnapshot) {
+              //       if (streamSnapshot.connectionState ==
+              //           ConnectionState.waiting) {
+              //         return const Center(child: CircularProgressIndicator());
+              //       } else if (streamSnapshot.hasError) {
+              //         return const Center(
+              //           child: Text('Lỗi'),
+              //         );
+              //       } else if (!streamSnapshot.hasData) {
+              //         return const Center(
+              //           child: Text('Không có dữ liệu'),
+              //         );
+              //       } else {
+              //         final docs = streamSnapshot.data!;
+              //         return
+              //       }
+              //     }),
+              Padding(
+                padding: EdgeInsets.only(
+                  left: finalproductsize(finaltotalprice),
+                  top: 10,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Tổng: ',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 13),
+                    ),
+                    Text(
+                      oCcy.format(finaltotalprice),
+                      style: const TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               const SizedBox(
                 width: 10,
               ),
