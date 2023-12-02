@@ -9,7 +9,6 @@ class Home extends StatefulWidget {
   @override
   State<Home> createState() => _HomeState();
 }
-
 class _HomeState extends State<Home> {
   final Stream<QuerySnapshot> _noibat = FirebaseFirestore.instance
       .collection('products')

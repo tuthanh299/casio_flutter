@@ -1,8 +1,7 @@
-
-import 'package:casio_flutter/screens/register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'register.dart';
 import 'auth.dart';
 
 class Login extends StatefulWidget {
@@ -124,7 +123,7 @@ class _LoginState extends State<Login> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    'Email:',
+                    'Tài khoản:',
                     textAlign: TextAlign.left,
                     style: TextStyle(
                         fontWeight: FontWeight.bold
@@ -143,7 +142,7 @@ class _LoginState extends State<Login> {
                       decoration: const InputDecoration(
                         contentPadding: EdgeInsets.only(left: 10),
                         border: InputBorder.none,
-                        hintText: 'Nhập email',
+                        hintText: 'Nhập tài khoản',
                         hintStyle: TextStyle(color: Colors.black, fontSize: 12)
                       ),
                     ),
@@ -246,16 +245,9 @@ class _LoginState extends State<Login> {
                         style: TextStyle(color: Colors.blue)
                     ),
                   )
-                                  ],
+                ],
               ),
               //end nút chuyển trang
-             Column(
-               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text('Mọi thông tin cần hỗ trợ vui lòng liên hệ ',style: TextStyle(fontSize:16),),
-                Text('qua email: gshock.support@gmail.com để được hỗ trợ!',style: TextStyle(fontSize:16),)
-                ],
-             )
             ],
           ),
         ),

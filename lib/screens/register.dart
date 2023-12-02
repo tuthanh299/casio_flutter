@@ -6,7 +6,6 @@ import '../components/provider.dart';
 import '../models/user.dart';
 import '../screens/login.dart';
 
-
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
 
@@ -64,7 +63,7 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-
+ RegExp passValid = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)");
     Future register() async {
       String temp1 = txtMail.text;
       String temp2 = txtFullName.text;
@@ -109,18 +108,18 @@ class _RegisterState extends State<Register> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 //logo
-                Center(
+                const Center(
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const Image(
+                        Image(
                           image: AssetImage('assets/imgs/logo.png'),
                           width: 100,
                           height: 100,
                         ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
                               'G-SHOCK',
                               style: TextStyle(
@@ -337,11 +336,11 @@ class _RegisterState extends State<Register> {
                           content:
                           Text('Vui lòng nhập đầy đủ các trường dữ liệu')));
                     }
-                    else if (txtPass.text.length < 8) {
+                    else if(txtPass.text.length < 8 || passValid.hasMatch(txtPass.text.trim())){
                       ScaffoldMessenger.of(context).clearSnackBars();
                       ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                              content: Text('Password không trên 8 kí tự')));
+                              content: Text('Password không trên 8 kí tự và phải có ký tự đặc biệt')));
                     }
                     else if (txtPass.text != txtrePass.text) {
                       ScaffoldMessenger.of(context).clearSnackBars();
@@ -349,7 +348,6 @@ class _RegisterState extends State<Register> {
                           const SnackBar(
                               content: Text('Password không trùng khớp')));
                     }
-                     
                     else if (checkMail){
                       ScaffoldMessenger.of(context).clearSnackBars();
                       ScaffoldMessenger.of(context).showSnackBar(

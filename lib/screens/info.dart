@@ -1,4 +1,4 @@
-import '../screens/changepass.dart';
+import 'editpassword.dart';
 
 import '../components/provider.dart';
 import '../screens/editinfo.dart';
