@@ -20,9 +20,9 @@ class _EditAddressState extends State<EditAddress> {
             },
             icon: const Icon(Icons.arrow_back)),
         title: const Padding(
-          padding: EdgeInsets.only(left: 80),
+          padding: EdgeInsets.only(left: 40),
           child: Text(
-            'Thanh toán',
+            'Chỉnh sửa thông tin',
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
