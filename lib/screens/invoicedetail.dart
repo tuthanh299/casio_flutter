@@ -1,16 +1,37 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+import '../components/provider.dart';
+import '../screens/product_detail_screen.dart';
 
 class InvoiceDetail extends StatefulWidget {
-  const InvoiceDetail({Key? key}) : super(key: key);
+  const InvoiceDetail({
+    Key? key,
+    required this.uid,
+    required this.order_id,
+    required this.date,
+    required this.status,
+    required this.total,
+  }) : super(key: key);
+
+  final String uid;
+  final String order_id;
+  final int date;
+  final bool status;
+  final double total;
 
   @override
   State<InvoiceDetail> createState() => _InvoiceDetailState();
 }
 
 class _InvoiceDetailState extends State<InvoiceDetail> {
+  var oCcy = NumberFormat("#,###đ", "vi_VN");
+  
   double cochu = 15;
   @override
   Widget build(BuildContext context) {
+    var _orderdetail = FirebaseFirestore.instance.collection('orders_detail').where('order_id', isEqualTo: widget.order_id).snapshots();
     return Scaffold(
       body: Column(
         children: [
@@ -53,152 +74,198 @@ class _InvoiceDetailState extends State<InvoiceDetail> {
                     )
                   ),
                   //thông tin người dùng
-                  Container(
-                    padding: EdgeInsets.all(MediaQuery.of(context).size.width / 20),
-                    margin: EdgeInsets.all(MediaQuery.of(context).size.width / 20),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Text('Thời gian: ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: cochu),),
-                            Text('12:30 AM 30/10/2023', style: TextStyle(fontWeight: FontWeight.bold, fontSize: cochu),),
-                          ],
-                        ),
-                        const SizedBox(height: 10,),
-                        Row(
-                          children: [
-                            Text('Tên người nhận: ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: cochu),),
-                            Text('Lê Thanh Tú', style: TextStyle(fontWeight: FontWeight.bold, fontSize: cochu),),
-                          ],
-                        ),
-                        const SizedBox(height: 10,),
-                        Row(
-                          children: [
-                            Text('Số điện thoại: ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: cochu),),
-                            Text('0123456789', style: TextStyle(fontWeight: FontWeight.bold, fontSize: cochu),),
-                          ],
-                        ),
-                        const SizedBox(height: 10,),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text('Địa chỉ: ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: cochu),),
-                        ),
-                        const SizedBox(height: 10,),
-                        Text('65 Đ. Huỳnh Thúc Kháng, Bến Nghé, Quận 1, Thành phố Hồ Chí Minh', style: TextStyle(fontWeight: FontWeight.bold, fontSize: cochu),),
-                        const SizedBox(height: 10,),
-                        Row(
-                          children: [
-                            Text('Trạng thái: ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: cochu),),
-                            Text('Hoàn thành', style: TextStyle(fontWeight: FontWeight.bold, fontSize: cochu),),
-                          ],
-                        ),
-                      ],
-                    ),
+                  FutureBuilder(
+                    future: getUser(widget.uid),
+                    builder: (context, futureSnapshot) {
+                      if(futureSnapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                            child: CircularProgressIndicator()
+                        );
+                      } else if(futureSnapshot.hasError) {
+                        return const Center(
+                          child: Text('Lỗi'),
+                        );
+                      } else if (!futureSnapshot.hasData) {
+                        return const Center(
+                          child: Text('Không có dữ liệu'),
+                        );
+                      } else {
+                        final docs = futureSnapshot.data!;
+                        final date1 = DateTime.fromMicrosecondsSinceEpoch(widget.date);
+                        return Container(
+                          padding: EdgeInsets.all(MediaQuery.of(context).size.width / 20),
+                          margin: EdgeInsets.all(MediaQuery.of(context).size.width / 20),
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Text('Thời gian: ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: cochu),),
+                                  Text('${date1.hour}:${date1.minute} ${date1.day}/${date1.month}/${date1.year}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: cochu),),
+                                ],
+                              ),
+                              const SizedBox(height: 10,),
+                              Row(
+                                children: [
+                                  Text('Tên người nhận: ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: cochu),),
+                                  Text(docs.fullname.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: cochu),),
+                                ],
+                              ),
+                              const SizedBox(height: 10,),
+                              Row(
+                                children: [
+                                  Text('Số điện thoại: ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: cochu),),
+                                  Text(docs.number.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: cochu),),
+                                ],
+                              ),
+                              const SizedBox(height: 10,),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text('Địa chỉ: ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: cochu),),
+                              ),
+                              const SizedBox(height: 10,),
+                              Text(docs.address.toString() == "" ? 'Trống' : docs.address.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: cochu),),
+                              const SizedBox(height: 10,),
+                              Row(
+                                children: [
+                                  Text('Trạng thái: ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: cochu),),
+                                  Text(widget.status ? 'Hoàn thành' : 'Chưa hoàn thành' , style: TextStyle(fontWeight: FontWeight.bold, fontSize: cochu),),
+                                ],
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    }
                   ),
                   //end thông tin người dùng
                   //sản phẩm
-                  Container(
-                    margin: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black)
-                    ),
-                    child: Row(
-                      children: [
-                        Image.network('https://timemart.vn/upload/product/dong-ho-casio/GA-2140RE-1A-000.jpg', height: 100, width: 100,),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children:  [
-                            const Text('Đồng Hồ G-SHOCK P8013'),
-                            const SizedBox(height: 30,),
-                            const Text('550.000đ', style: TextStyle(color: Colors.grey),),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                SizedBox(width: MediaQuery.of(context).size.width / 1.6,),
-                                const Text('x1', style: TextStyle(color: Colors.black),),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black)
-                    ),
-                    child: Row(
-                      children: [
-                        Image.network('https://timemart.vn/upload/product/dong-ho-casio/GA-2140RE-1A-000.jpg', height: 100, width: 100,),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children:  [
-                            const Text('Đồng Hồ G-SHOCK P8013'),
-                            const SizedBox(height: 30,),
-                            const Text('550.000đ', style: TextStyle(color: Colors.grey),),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                SizedBox(width: MediaQuery.of(context).size.width / 1.6,),
-                                const Text('x1', style: TextStyle(color: Colors.black),),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                  StreamBuilder(
+                    stream: _orderdetail,
+                    builder: (context, streamSnapshot) {
+                      if(streamSnapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                            child: CircularProgressIndicator()
+                        );
+                      } else if(streamSnapshot.hasError) {
+                        return const Center(
+                          child: Text('Lỗi'),
+                        );
+                      } else if (!streamSnapshot.hasData) {
+                        return const Center(
+                          child: Text('Không có dữ liệu'),
+                        );
+                      } else {
+                        final docs = streamSnapshot.data!.docs;
+                        return ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: docs.length,
+                          itemBuilder: (context, index) {
+                            return FutureBuilder(
+                              future: getProduct(docs[index]['product_id']),
+                              builder: (context, futureSnapshot) {
+                                if(futureSnapshot.connectionState == ConnectionState.waiting) {
+                                  return const Center(
+                                      child: CircularProgressIndicator()
+                                  );
+                                } else if(futureSnapshot.hasError) {
+                                  return const Center(
+                                    child: Text('Lỗi'),
+                                  );
+                                } else if (!futureSnapshot.hasData) {
+                                  return const Center(
+                                    child: Text('Không có dữ liệu'),
+                                  );
+                                } else {
+                                  final future_docs = futureSnapshot.data;
+                                  return future_docs == null
+                                    ? const Center(child: CircularProgressIndicator(),)
+                                    : InkWell(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(builder: (context) => ProductDetail(productId: future_docs.id!,))
+                                      );
+                                    },
+                                    child: Container(
+                                      margin: const EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                          border: Border.all(color: Colors.black)
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Image.asset(future_docs.thumbnail![0], height: 100, width: 100,),
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children:  [
+                                              Text(future_docs.name),
+                                              const SizedBox(height: 30,),
+                                              //gia tien san pham
+                                              checksale(future_docs.price, future_docs.discount!),
+                                              //end gia tien san pham
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                children: [
+                                                  SizedBox(width: MediaQuery.of(context).size.width / 1.6,),
+                                                  Text('x${docs[index]['qty']}', style: const TextStyle(color: Colors.black),),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                }
+                              }
+                            );
+                          }
+                        );
+                      }
+                    }
                   ),
                   //end sản phẩm
-                  //tổng tiền
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(5, 10, 5, 10),
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black)
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text('Tổng'),
-                        Text('1.100.000₫', style: TextStyle(color: Colors.red),),
-                      ],
-                    ),
-                  )
-                  //end tổng tiền
                 ],
               )
           ),
-          //navbar
-          NavigationBar(
-            height: 30,
-            destinations: const [
-              NavigationDestination(
-                icon: Icon(Icons.home_outlined, color: Colors.white,),
-                label: '',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.search_outlined, color: Colors.white,),
-                label: '',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.menu_outlined, color: Colors.white,),
-                label: '',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.shopping_cart_outlined, color: Colors.white,),
-                label: '',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.person_outline_outlined, color: Colors.white,),
-                label: '',
-              ),
-            ],
-            backgroundColor: Colors.black,
-          )
-          //end navbar
+          //tổng tiền
+          Container(
+            margin: const EdgeInsets.fromLTRB(5, 10, 5, 10),
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.black)
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('Tổng:'),
+                Text(oCcy.format(widget.total.toInt()), style: const TextStyle(color: Colors.red),),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20,),
+          //end tổng tiền
         ],
       ),
     );
+  }
+
+  checksale(int price, int discount) {
+    if (discount == 0) {
+      return Text(oCcy.format(price), style: const TextStyle(color: Colors.red),);
+    } else {
+      var saleprice = price - price * discount / 100;
+      return Row(
+        children: [
+          Text(oCcy.format(price),
+            style: const TextStyle(
+                color: Colors.grey,
+                decoration: TextDecoration.lineThrough
+            ),
+          ),
+          const SizedBox(width: 10,),
+          Text(oCcy.format(saleprice), style: const TextStyle(color: Colors.red),),
+        ],
+      );
+    }
   }
 }

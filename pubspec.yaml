@@ -159,6 +159,7 @@ flutter:
     - assets/imgs/SLV-22A-9A.png
     - assets/imgs/SLV-22A-9AA.png
     - assets/imgs/SLV-22A-9AB.png
+    - assets/imgs/nocart.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
